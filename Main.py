@@ -41,10 +41,11 @@ TrajetMin = ""
 VilleDépart = "Paris"
 
 """for i in range(NmbIterations):"""
+LongueurActuelle = 0
+TrajetActuel = ""
 while Liste_Des_Villes[3][0] == 0:
     # Choix de la prochaine destination
     ChoixDeVille = np.random.randint(1, (len(Liste_Des_Villes[0])))
-    print(Liste_Des_Villes[3][ChoixDeVille])
 
     while Liste_Des_Villes[3][ChoixDeVille] == 1:
         # Check si nous n'avons pas pris une destination déjà prise
@@ -56,7 +57,30 @@ while Liste_Des_Villes[3][0] == 0:
     # Donner la destination avec le kilometrage
     print(VilleDépart, "-> ", VilleEtape, " = ", Distance_Villes(VilleDépart, VilleEtape)/1000, "km")
 
-    # Intervertir Ville de départ et ville d'arrivée*
+    # Mettre à jour la distance actuelle
+    print(Distance_Villes(VilleDépart, VilleEtape))
+    print(Distance_Villes(VilleDépart, VilleEtape)/1000)
+    LongueurActuelle += Distance_Villes(VilleDépart, VilleEtape)/1000
+
+    # Intervertir Ville de départ et ville d'arrivée
     VilleDépart = VilleEtape
 
     # Checker si nous n'avons pas fais toutes les destinations
+    # Additionner la dernière ligne de toutes les villes pour savoir si nous sommes passé par toutes proposées
+    count = 0
+    for i in range(len(Liste_Des_Villes[3])):
+        x = Liste_Des_Villes[3][i]
+        count += x
+        # print(count)
+    # Comparer le nombres de villes traversés avec le nombre total possible
+    if count == (len(Liste_Des_Villes[3])-1):
+        # Passer de la dernière ville à Paris (Ville de fin)
+        LongueurActuelle += Distance_Villes(VilleDépart, "Paris")/1000
+        print(VilleDépart, "-> ", VilleEtape, " = ", Distance_Villes(VilleDépart, VilleEtape)/1000, "km")
+        # Spécifier que nous sommes passé par Paris
+        Liste_Des_Villes[3][0] = 1
+        print("here")
+        break
+
+print("finish")
+print("La longueur est :", LongueurActuelle, "km")

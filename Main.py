@@ -58,8 +58,6 @@ while Liste_Des_Villes[3][0] == 0:
     print(VilleDépart, "-> ", VilleEtape, " = ", Distance_Villes(VilleDépart, VilleEtape)/1000, "km")
 
     # Mettre à jour la distance actuelle
-    print(Distance_Villes(VilleDépart, VilleEtape))
-    print(Distance_Villes(VilleDépart, VilleEtape)/1000)
     LongueurActuelle += Distance_Villes(VilleDépart, VilleEtape)/1000
 
     # Intervertir Ville de départ et ville d'arrivée
@@ -76,11 +74,11 @@ while Liste_Des_Villes[3][0] == 0:
     if count == (len(Liste_Des_Villes[3])-1):
         # Passer de la dernière ville à Paris (Ville de fin)
         LongueurActuelle += Distance_Villes(VilleDépart, "Paris")/1000
-        print(VilleDépart, "-> ", VilleEtape, " = ", Distance_Villes(VilleDépart, VilleEtape)/1000, "km")
+        print(VilleDépart, "-> Paris = ", Distance_Villes(VilleDépart, "Paris")/1000, "km")
         # Spécifier que nous sommes passé par Paris
         Liste_Des_Villes[3][0] = 1
         print("here")
         break
 
 print("finish")
-print("La longueur est :", LongueurActuelle, "km")
+print("La longueur est :", round(LongueurActuelle), "km")

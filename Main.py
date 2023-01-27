@@ -1,12 +1,14 @@
 import numpy as np
 import math as math
 from datetime import datetime
+from random import sample
+from progressbar import ProgressBar, Percentage, Timer, Bar, ETA
+import os
 
 # Création d'un tableau contenant les villes et leurs coordonnées géographique
 Liste_Des_Villes = [["Paris", "Marseille", "Lyon", "Toulouse", "Nice", "Nantes", "Strasbourg"],
                     [48.8566, 43.2965, 45.764, 43.6047, 43.7101, 47.2184, 48.5734],
-                    [2.3522, 5.3698, 4.8357, 1.4442, 7.262, -1.5536, 7.7521],
-                    [0,       0,     0,     0,       0,         0,     0]]
+                    [2.3522, 5.3698, 4.8357, 1.4442, 7.262, -1.5536, 7.7521]]
 
 
 def LongVille(NomVille):
@@ -41,18 +43,20 @@ def Distance_Villes(VilleA, VilleB):
     Return : Distance 'int'
     """
     Rayon = 6_367_445
-    LongA, LongB = LongVille(VilleA), LongVille(VilleB)
-    LatA, LatB = LatVille(VilleA), LatVille(VilleB)
-    LongA, LongB = math.radians(LongA), math.radians(LongB)
-    LatA, LatB = math.radians(LatA), math.radians(LatB)
-    return Rayon*(np.arccos(np.sin(LatA)*np.sin(LatB)+np.cos(LatA)*np.cos(LatB)*np.cos(LongB-LongA)))
+    LongA, LongB = math.radians(
+        LongVille(VilleA)), math.radians(LongVille(VilleB))
+    LatA, LatB = math.radians(LatVille(VilleA)), math.radians(LatVille(VilleB))
+    return round((Rayon*(np.arccos(np.sin(LatA)*np.sin(LatB)+np.cos(LatA)*np.cos(LatB)*np.cos(LongB-LongA))))/1000)
 
 
 # Initialisation des variables générales
-LongueurMin = 2_147_483_647  # Valeure maximum que peut comporter un integer
+LongueurMin = float("inf")  # Valeure maximum que peut comporter un integer
 TrajetMin = ""
+# Clear le terminal
+os.system('cls')
 # Demander le nombre d'itération à effectuer
-NmbIterations = int(input("Number of iterations ?"))
+NmbIterations = int(input(
+    f'Number of iterations ? La probabilitée est de {math.factorial(len(Liste_Des_Villes [0]))} : '))
 
 
 def ComparaisonDistance(x):
@@ -68,60 +72,28 @@ def ComparaisonDistance(x):
         TrajetMin = TrajetActuel
 
 
-def Reset():
-    """
-    Remettre le nombre de passages des villes à 0
-    Entree : None
-    Return : None
-    """
-    for i in range(0, len(Liste_Des_Villes[3])):
-        Liste_Des_Villes[3][i] = 0
-
-
-# Récuperer le temps du start
+# Récuperer le temps du début de la simulation
 StartTime = datetime.strptime(datetime.now().strftime('%H:%M:%S'), "%H:%M:%S")
-print(f'Départ de la simulation: {StartTime}')
+# Début de la barre de progression
+bar = ProgressBar(widgets=[Percentage(), Timer(),
+                           Bar(), ETA()], maxval=NmbIterations)
+bar.start()
 for i in range(NmbIterations):
-    VilleDépart = "Paris"
+
     LongueurActuelle = 0
-    TrajetActuel = VilleDépart
-    Reset()
-    while Liste_Des_Villes[3][0] == 0:
-        # Choix de la prochaine destination
-        ChoixDeVille = np.random.randint(1, (len(Liste_Des_Villes[0])))
-
-        while Liste_Des_Villes[3][ChoixDeVille] == 1:
-            # Check si nous n'avons pas pris une destination déjà prise
-            ChoixDeVille = np.random.randint(1, (len(Liste_Des_Villes[0])))
-        VilleEtape = Liste_Des_Villes[0][ChoixDeVille]
-
-        # Ajouter un 1 pour prevenir que nous sommes déjà passé par cette destination
-        Liste_Des_Villes[3][ChoixDeVille] = 1
-        # Mettre à jour la distance actuelle
-        LongueurActuelle += Distance_Villes(VilleDépart, VilleEtape)/1000
-
-        # Integrer les étapes dans notre Trajet actuelle
+    VilleDepart = "Paris"
+    TrajetActuel = VilleDepart
+    TrajetVilles = sample(
+        Liste_Des_Villes[0][1:], len(Liste_Des_Villes[0][1:]))
+    for j in range(len(TrajetVilles)):
+        VilleEtape = TrajetVilles[j]
+        LongueurActuelle += Distance_Villes(VilleDepart, VilleEtape)
         TrajetActuel += " -> " + VilleEtape
-        # Intervertir Ville de départ et ville d'arrivée
-        VilleDépart = VilleEtape
-
-        # Checker si nous n'avons pas fais toutes les destinations
-        # Additionner la dernière ligne de toutes les villes pour savoir si nous sommes passé par toutes proposées
-        count = 0
-        for j in range(len(Liste_Des_Villes[3])):
-            x = Liste_Des_Villes[3][j]
-            count += x
-            # print(count)
-
-        # Comparer le nombres de villes traversés avec le nombre total possible
-        if count == (len(Liste_Des_Villes[3])-1):
-            # Passer de la dernière ville à Paris (Ville de fin)
-            LongueurActuelle += Distance_Villes(VilleDépart, "Paris")/1000
-            TrajetActuel += " -> Paris"
-            # Spécifier que nous sommes passé par Paris
-            Liste_Des_Villes[3][0] = 1
-            break
+        VilleDepart = VilleEtape
+    LongueurActuelle += Distance_Villes(VilleDepart, "Paris")
+    TrajetActuel += " -> Paris"
     ComparaisonDistance(LongueurActuelle)
+    bar.update(i)
 
 # Récuperer le temps final et trouver le delta
 EndTime = datetime.strptime(datetime.now().strftime('%H:%M:%S'), "%H:%M:%S")

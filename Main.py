@@ -6,10 +6,37 @@ from progressbar import ProgressBar, Percentage, Timer, Bar, ETA
 import os
 
 # Création d'un tableau contenant les villes et leurs coordonnées géographique
-Liste_Des_Villes = [["Paris", "Marseille", "Lyon", "Toulouse", "Nice", "Nantes", "Strasbourg", "Montpellier"],
-                    [48.8566, 43.2965, 45.764, 43.6047,
-                        43.7101, 47.2184, 48.5734, 43.62505],
-                    [2.3522, 5.3698, 4.8357, 1.4442, 7.262, -1.5536, 7.7521, 3.862038]]
+Liste_Des_Villes = [
+    ["Paris", 48.8566, 2.3522],
+    ["Marseille", 43.2965, 5.3698],
+    ["Lyon", 45.764, 4.8357],
+    ["Toulouse", 43.6047, 1.4442],
+    ["Nice", 43.7101, 7.262],
+    ["Nantes", 47.2184, -1.5536],
+    ["Strasbourg", 48.5734, 7.7521],
+    ["Montpellier", 43.6107, 3.8767],
+    ["Bordeaux", 44.8379, -0.5795],
+    ["Lille", 50.6329, 3.0583],
+    ["Rennes", 48.1134, -1.6779],
+    ["Grenoble", 45.1885, 5.7245],
+    ["Rouen", 49.4431, 1.0989],
+    ["Saint-Etiennes", 45.4386, 4.3871],
+    ["Dijon", 47.3167, 5.0167],
+    ["Nimes", 43.8345, 4.3600],
+    ["Villeurbannes", 45.7644, 4.8864],
+    ["Angers", 47.4784, -0.5602],
+    ["Saint-Denis", 48.9358, 2.3596],
+    ["Aix-en-Provence", 43.5297, 5.4474],
+    ["Brest", 48.3893, -4.486],
+    ["Limoges", 45.8319, 1.2621],
+    ["Clermont-Ferrand", 45.7833, 3.0833],
+    ["Amiens", 49.8941, 2.295],
+    ["Nancy", 48.6839, 6.1844],
+    ["Roubaix", 50.6942, 3.1746],
+    ["Tourcoing", 50.7236, 3.1524],
+    ["Orléans", 47.9029, 1.9107],
+    ["Mulhouse", 47.7500, 7.3335],
+    ["Caen", 49.1828, -0.3715]]
 
 
 def LongVille(NomVille):
@@ -19,9 +46,9 @@ def LongVille(NomVille):
     Entree : NomVille 'string'
     Output : Longitude 'int'    
     """
-    for i in range(len(Liste_Des_Villes[0])):
-        if NomVille == Liste_Des_Villes[0][i]:
-            return Liste_Des_Villes[1][i]
+    for i in range(len(Liste_Des_Villes)):
+        if NomVille == Liste_Des_Villes[i][0]:
+            return Liste_Des_Villes[i][1]
 
 
 def LatVille(NomVille):
@@ -31,9 +58,9 @@ def LatVille(NomVille):
     Entree : NomVille 'string'
     Output : Latitude 'int'    
     """
-    for i in range(len(Liste_Des_Villes[0])):
-        if NomVille == Liste_Des_Villes[0][i]:
-            return Liste_Des_Villes[2][i]
+    for i in range(len(Liste_Des_Villes)):
+        if NomVille == Liste_Des_Villes[i][0]:
+            return Liste_Des_Villes[i][2]
 
 
 def Distance_Villes(VilleA, VilleB):
@@ -57,7 +84,7 @@ TrajetMin = ""
 os.system('cls')
 # Demander le nombre d'itération à effectuer
 NmbIterations = int(input(
-    f'Nombre de test ? La probabilitée est de {math.factorial(len(Liste_Des_Villes [0]))} : '))
+    f'Nombre de test ? La probabilitée est de {math.factorial(len(Liste_Des_Villes)):_} : '))
 
 
 def ComparaisonDistance(x):
@@ -86,7 +113,7 @@ for i in range(NmbIterations):
     VilleDepart = "Paris"
     TrajetActuel = VilleDepart
     TrajetVilles = sample(
-        Liste_Des_Villes[0][1:], len(Liste_Des_Villes[0][1:]))
+        list(zip(*Liste_Des_Villes))[0][1:], len(list(zip(*Liste_Des_Villes))[0][1:]))
     for j in range(len(TrajetVilles)):
         VilleEtape = TrajetVilles[j]
         LongueurActuelle += Distance_Villes(VilleDepart, VilleEtape)

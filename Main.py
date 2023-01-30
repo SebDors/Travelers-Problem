@@ -6,16 +6,17 @@ from progressbar import ProgressBar, Percentage, Timer, Bar, ETA
 import os
 
 # Création d'un tableau contenant les villes et leurs coordonnées géographique
-Liste_Des_Villes = [["Paris", "Marseille", "Lyon", "Toulouse", "Nice", "Nantes", "Strasbourg"],
-                    [48.8566, 43.2965, 45.764, 43.6047, 43.7101, 47.2184, 48.5734],
-                    [2.3522, 5.3698, 4.8357, 1.4442, 7.262, -1.5536, 7.7521]]
+Liste_Des_Villes = [["Paris", "Marseille", "Lyon", "Toulouse", "Nice", "Nantes", "Strasbourg", "Montpellier"],
+                    [48.8566, 43.2965, 45.764, 43.6047,
+                        43.7101, 47.2184, 48.5734, 43.62505],
+                    [2.3522, 5.3698, 4.8357, 1.4442, 7.262, -1.5536, 7.7521, 3.862038]]
 
 
 def LongVille(NomVille):
     """
     Fonction permettant d'acquerir la longitude de la ville dans le tableau
-    Entree : NomVille 'string'
 
+    Entree : NomVille 'string'
     Output : Longitude 'int'    
     """
     for i in range(len(Liste_Des_Villes[0])):
@@ -26,8 +27,8 @@ def LongVille(NomVille):
 def LatVille(NomVille):
     """
     Fonction permettant d'acquerir la latitude de la ville dans le tableau
-    Entree : NomVille 'string'
 
+    Entree : NomVille 'string'
     Output : Latitude 'int'    
     """
     for i in range(len(Liste_Des_Villes[0])):
@@ -56,12 +57,13 @@ TrajetMin = ""
 os.system('cls')
 # Demander le nombre d'itération à effectuer
 NmbIterations = int(input(
-    f'Number of iterations ? La probabilitée est de {math.factorial(len(Liste_Des_Villes [0]))} : '))
+    f'Nombre de test ? La probabilitée est de {math.factorial(len(Liste_Des_Villes [0]))} : '))
 
 
 def ComparaisonDistance(x):
     """
     Comparer la la distance entre le trajet en cours et le trajet minimal
+
     Entree : x 'int'
     return : None
     """

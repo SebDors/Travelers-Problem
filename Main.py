@@ -84,7 +84,7 @@ TrajetMin = ""
 os.system('cls')
 # Demander le nombre d'itération à effectuer
 NmbIterations = int(input(
-    f'Nombre de test ? La probabilitée est de {math.factorial(len(Liste_Des_Villes)):_} : '))
+    f'Nombre de test ? La probabilitée est de {math.factorial(len(Liste_Des_Villes)-1):_} : '))
 
 
 def ComparaisonDistance(x):
@@ -124,15 +124,18 @@ for i in range(NmbIterations):
     ComparaisonDistance(LongueurActuelle)
     bar.update(i)
 
+# Calcul du temps mis pour une moyenne de 110km/h
+TempsTrajet = round(LongueurMin/110)
+
 # Récuperer le temps final et trouver le delta
 EndTime = datetime.strptime(datetime.now().strftime('%H:%M:%S'), "%H:%M:%S")
 DeltaTime = EndTime - StartTime
 # Convertir en minute si necessaire
 if DeltaTime.total_seconds() > 60:
     DeltaTimeMin = DeltaTime.total_seconds()/60
-    FinalMessage = f'Le trajet minimum est : {TrajetMin} avec {round(LongueurMin)} km.\r\nCela a pris {DeltaTimeMin} minutes'
+    FinalMessage = f'Le trajet minimum est : {TrajetMin} avec {round(LongueurMin)} km       \nLa durée du voyage est de {TempsTrajet} heures.\r\nCela a pris {DeltaTimeMin} minutes'
 else:
-    FinalMessage = f'Le trajet minimum est : {TrajetMin} avec {round(LongueurMin)} km.\r\nCela a pris {DeltaTime.total_seconds()} secondes'
+    FinalMessage = f'Le trajet minimum est : {TrajetMin} avec {round(LongueurMin)} km       \nLa durée du voyage est de {TempsTrajet} heures.\r\nCela a pris {DeltaTime.total_seconds()} secondes'
 
 # Donner le resultat trajet et km final
 print(FinalMessage)

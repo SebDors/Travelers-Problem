@@ -5,15 +5,6 @@ from random import sample
 from progressbar import ProgressBar, Percentage, Timer, Bar, ETA
 import os
 
-# Initialisation des variables générales
-LongueurMin = float("inf")  # Valeure maximum que peut comporter un integer
-TrajetMin = ""
-# Clear le terminal
-os.system('cls')
-# Demander le nombre d'itération à effectuer
-NmbIterations = int(input(
-    f'Nombre de test ? La probabilitée est de {math.factorial(len(Liste_Des_Villes)-1):_} : '))
-
 # Création d'un tableau contenant les villes et leurs coordonnées géographique
 Liste_Des_Villes = [
     ["Paris", 48.8566, 2.3522],
@@ -45,7 +36,8 @@ Liste_Des_Villes = [
     ["Tourcoing", 50.7236, 3.1524],
     ["Orléans", 47.9029, 1.9107],
     ["Mulhouse", 47.7500, 7.3335],
-    ["Caen", 49.1828, -0.3715]]
+    ["Caen", 49.1828, -0.3715]
+]
 
 
 def LongVille(NomVille):
@@ -85,24 +77,29 @@ def Distance_Villes(VilleA, VilleB):
     LatA, LatB = math.radians(LatVille(VilleA)), math.radians(LatVille(VilleB))
     return round((Rayon*(np.arccos(np.sin(LatA)*np.sin(LatB)+np.cos(LatA)*np.cos(LatB)*np.cos(LongB-LongA))))/1000)
 
-def EmissionCO2(km):
+
+def EmissionCO2Calcul(km):
     """
-    Fonction calculant l'emission de CO2 de la voiture.
+    Fonction calculant l'emission de CO2 de la voiture pour chaques trajet entre les villes
     Electrique 6g/km Autonimie 400km
     Thermique 120g/km Autonomie infinie
 
-    Input : 
-    Output :
-    
-    if km < 400 : """
+    Input : km 'int'
+    Output : None
+    """
+    global EmissionCO2Actuel
+    if km <= 400:
+        return 6*km
+    else:
+        return (6*400 + (km-400)*120)
 
-        
+
 def ComparaisonDistance(x):
     """
-    Comparer la la distance entre le trajet en cours et le trajet minimal
+    Comparer la distance entre le trajet en cours et le trajet minimal
 
-    Entree : x 'int'
-    return : None
+    Input : x 'int'
+    Output : None
     """
     global LongueurMin
     global TrajetMin
@@ -110,6 +107,31 @@ def ComparaisonDistance(x):
         LongueurMin = x
         TrajetMin = TrajetActuel
 
+
+def ComparaisonEmission(x):
+    """
+    Comparer l'émission en C02 entre le trajet en cours et le trajet minimal
+
+    Input : x 'int'
+    Output : None
+    """
+    global EmissionCO2Min
+    global TrajetEmissionC02
+    if EmissionCO2Min > x:
+        EmissionCO2Min = x
+        TrajetEmissionC02 = TrajetActuel
+
+
+# Initialisation des variables générales
+LongueurMin = float("inf")  # Valeure maximum que peut comporter un integer
+EmissionCO2Min = float("inf")
+TrajetMin = ""
+TrajetEmissionC02 = ""
+# Clear le terminal
+os.system('cls')
+# Demander le nombre d'itération à effectuer
+NmbIterations = int(input(
+    f'Nombre de test ? La probabilitée est de {math.factorial(len(Liste_Des_Villes)-1):_} : '))
 
 # Récuperer le temps du début de la simulation
 StartTime = datetime.strptime(datetime.now().strftime('%H:%M:%S'), "%H:%M:%S")
@@ -122,16 +144,20 @@ for i in range(NmbIterations):
     LongueurActuelle = 0
     VilleDepart = "Paris"
     TrajetActuel = VilleDepart
+    EmissionCO2Actuel = 0
     TrajetVilles = sample(
         list(zip(*Liste_Des_Villes))[0][1:], len(list(zip(*Liste_Des_Villes))[0][1:]))
     for j in range(len(TrajetVilles)):
         VilleEtape = TrajetVilles[j]
         LongueurActuelle += Distance_Villes(VilleDepart, VilleEtape)
         TrajetActuel += " -> " + VilleEtape
+        EmissionCO2Actuel += EmissionCO2Calcul(
+            Distance_Villes(VilleDepart, VilleEtape))
         VilleDepart = VilleEtape
     LongueurActuelle += Distance_Villes(VilleDepart, "Paris")
     TrajetActuel += " -> Paris"
     ComparaisonDistance(LongueurActuelle)
+    ComparaisonEmission(EmissionCO2Actuel)
     bar.update(i)
 
 # Calcul du temps mis pour une moyenne de 110km/h
@@ -149,3 +175,5 @@ else:
 
 # Donner le resultat trajet et km final
 print(FinalMessage)
+print(
+    f"L'emission CO2 est de {EmissionCO2Min:_}kg avec un parcours de {TrajetEmissionC02}")

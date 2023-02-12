@@ -15,28 +15,29 @@ Liste_Des_Villes = [
     ["Nantes", 47.2184, -1.5536],
     ["Strasbourg", 48.5734, 7.7521],
     ["Montpellier", 43.6107, 3.8767],
-    ["Bordeaux", 44.8379, -0.5795],
-    ["Lille", 50.6329, 3.0583],
-    ["Rennes", 48.1134, -1.6779],
-    ["Grenoble", 45.1885, 5.7245],
-    ["Rouen", 49.4431, 1.0989],
-    ["Saint-Etiennes", 45.4386, 4.3871],
-    ["Dijon", 47.3167, 5.0167],
-    ["Nimes", 43.8345, 4.3600],
-    ["Villeurbannes", 45.7644, 4.8864],
-    ["Angers", 47.4784, -0.5602],
-    ["Saint-Denis", 48.9358, 2.3596],
-    ["Aix-en-Provence", 43.5297, 5.4474],
-    ["Brest", 48.3893, -4.486],
-    ["Limoges", 45.8319, 1.2621],
-    ["Clermont-Ferrand", 45.7833, 3.0833],
-    ["Amiens", 49.8941, 2.295],
-    ["Nancy", 48.6839, 6.1844],
-    ["Roubaix", 50.6942, 3.1746],
-    ["Tourcoing", 50.7236, 3.1524],
-    ["Orléans", 47.9029, 1.9107],
-    ["Mulhouse", 47.7500, 7.3335],
-    ["Caen", 49.1828, -0.3715]]
+    #["Bordeaux", 44.8379, -0.5795],
+    #["Lille", 50.6329, 3.0583],
+    #["Rennes", 48.1134, -1.6779],
+    #["Grenoble", 45.1885, 5.7245],
+    #["Rouen", 49.4431, 1.0989],
+    #["Saint-Etiennes", 45.4386, 4.3871],
+    #["Dijon", 47.3167, 5.0167],
+    #["Nimes", 43.8345, 4.3600],
+    #["Villeurbannes", 45.7644, 4.8864],
+    #["Angers", 47.4784, -0.5602],
+    #["Saint-Denis", 48.9358, 2.3596],
+    #["Aix-en-Provence", 43.5297, 5.4474],
+    #["Brest", 48.3893, -4.486],
+    #["Limoges", 45.8319, 1.2621],
+    #["Clermont-Ferrand", 45.7833, 3.0833],
+    #["Amiens", 49.8941, 2.295],
+    #["Nancy", 48.6839, 6.1844],
+    #["Roubaix", 50.6942, 3.1746],
+    #["Tourcoing", 50.7236, 3.1524],
+    #["Orléans", 47.9029, 1.9107],
+    #["Mulhouse", 47.7500, 7.3335],
+    #["Caen", 49.1828, -0.3715]
+]
 
 
 def LongVille(NomVille):
@@ -85,7 +86,6 @@ os.system('cls')
 # Demander le nombre d'itération à effectuer
 NmbIterations = int(input(
     f'Nombre de test ? La probabilitée est de {math.factorial(len(Liste_Des_Villes)-1):_} : '))
-VilleInitiale = input("Quelle est la ville initiale ? ")
 
 
 def ComparaisonDistance(x):
@@ -102,6 +102,24 @@ def ComparaisonDistance(x):
         TrajetMin = TrajetActuel
 
 
+def StartCity():
+    global VilleInitiale
+    global Liste_Des_Villes_Without
+    VilleInitiale = str(input("Par quelle ville commencer ? "))
+    i = 0
+    removed = False
+    while removed == False:
+        if i == 30:
+            removed = True
+            print("Ville non trouvée")
+        if Liste_Des_Villes[i][0] == VilleInitiale:
+            Liste_Des_Villes_Without.pop(i)
+            removed = True
+        i += 1
+
+
+Liste_Des_Villes_Without = list(Liste_Des_Villes)
+StartCity()
 # Récuperer le temps du début de la simulation
 StartTime = datetime.strptime(datetime.now().strftime('%H:%M:%S'), "%H:%M:%S")
 # Début de la barre de progression
@@ -114,14 +132,14 @@ for i in range(NmbIterations):
     VilleDepart = VilleInitiale
     TrajetActuel = VilleDepart
     TrajetVilles = sample(
-        list(zip(*Liste_Des_Villes))[0][1:], len(list(zip(*Liste_Des_Villes))[0][1:]))
+        list(zip(*Liste_Des_Villes_Without))[0], len(list(zip(*Liste_Des_Villes_Without))[0]))
     for j in range(len(TrajetVilles)):
         VilleEtape = TrajetVilles[j]
         LongueurActuelle += Distance_Villes(VilleDepart, VilleEtape)
         TrajetActuel += " -> " + VilleEtape
         VilleDepart = VilleEtape
-    LongueurActuelle += Distance_Villes(VilleDepart, "Paris")
-    TrajetActuel += " -> Paris"
+    LongueurActuelle += Distance_Villes(VilleDepart, VilleInitiale)
+    TrajetActuel += " -> " + VilleInitiale
     ComparaisonDistance(LongueurActuelle)
     bar.update(i)
 

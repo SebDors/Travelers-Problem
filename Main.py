@@ -1,3 +1,4 @@
+# Import des bibliothèques nécessaires
 import numpy as np
 import math as math
 from datetime import datetime
@@ -7,6 +8,7 @@ import os
 
 # Création d'un tableau contenant les villes et leurs coordonnées géographique
 Liste_Des_Villes = [
+    # [Nom de la ville, Latitude, Longitude]
     ["Paris", 48.8566, 2.3522],
     ["Marseille", 43.2965, 5.3698],
     ["Lyon", 45.764, 4.8357],
@@ -38,6 +40,8 @@ Liste_Des_Villes = [
     ["Mulhouse", 47.7500, 7.3335],
     ["Caen", 49.1828, -0.3715]]
 
+# Définition de la fonction pour obtenir la longitude d'une ville
+
 
 def LongVille(NomVille):
     """
@@ -46,11 +50,14 @@ def LongVille(NomVille):
     Entree : NomVille 'string'
     Output : Longitude 'int'    
     """
+    # Boucle pour parcourir toutes les villes dans la liste
     for i in range(len(Liste_Des_Villes)):
+        # Si le nom de la ville correspond
         if NomVille == Liste_Des_Villes[i][0]:
-            return Liste_Des_Villes[i][1]
+            return Liste_Des_Villes[i][1]  # Renvoie la longitude
 
 
+# Définition de la fonction pour obtenir la latitude d'une ville
 def LatVille(NomVille):
     """
     Fonction permettant d'acquerir la latitude de la ville dans le tableau
@@ -58,9 +65,13 @@ def LatVille(NomVille):
     Entree : NomVille 'string'
     Output : Latitude 'int'    
     """
+    # Boucle pour parcourir toutes les villes dans la liste
     for i in range(len(Liste_Des_Villes)):
+        # Si le nom de la ville correspond
         if NomVille == Liste_Des_Villes[i][0]:
-            return Liste_Des_Villes[i][2]
+            return Liste_Des_Villes[i][2]  # Renvoie la latitude
+
+# Définition de la fonction pour calculer la distance entre deux villes
 
 
 def Distance_Villes(VilleA, VilleB):
@@ -70,6 +81,7 @@ def Distance_Villes(VilleA, VilleB):
     Entree : VilleA,VilleB 'string'
     Return : Distance 'int'
     """
+    # Rayon de la Terre en mètre
     Rayon = 6_367_445
     LongA, LongB = math.radians(
         LongVille(VilleA)), math.radians(LongVille(VilleB))
@@ -78,7 +90,8 @@ def Distance_Villes(VilleA, VilleB):
 
 
 # Initialisation des variables générales
-LongueurMin = float("inf")  # Valeure maximum que peut comporter un integer
+# Valeure maximum que peut comporter un integer
+LongueurMin = float("inf")
 TrajetMin = ""
 # Clear le terminal
 os.system('cls')
@@ -86,16 +99,14 @@ os.system('cls')
 NmbIterations = int(input(
     f'Nombre de test ? La probabilitée est de {math.factorial(len(Liste_Des_Villes)-1):_} : '))
 
+# Fonction pour comparer la distance actuelle avec la distance minimale
+
 
 def ComparaisonDistance(x):
-    """
-    Comparer la la distance entre le trajet en cours et le trajet minimal
-
-    Entree : x 'int'
-    return : None
-    """
     global LongueurMin
     global TrajetMin
+    # Si la distance actuelle est plus courte que la distance minimale
+    # Alors la distance minimale est mise à jour
     if LongueurMin > x:
         LongueurMin = x
         TrajetMin = TrajetActuel
@@ -107,21 +118,28 @@ StartTime = datetime.strptime(datetime.now().strftime('%H:%M:%S'), "%H:%M:%S")
 bar = ProgressBar(widgets=[Percentage(), Timer(),
                            Bar(), ETA()], maxval=NmbIterations)
 bar.start()
+# Boucle principale pour effectuer le nombre d'itérations demandé
 for i in range(NmbIterations):
-
+    # Initialisation de la distance actuelle
     LongueurActuelle = 0
+    # Initialisation de la ville de départ
     VilleDepart = "Paris"
     TrajetActuel = VilleDepart
-    TrajetVilles = sample(
-        list(zip(*Liste_Des_Villes))[0][1:], len(list(zip(*Liste_Des_Villes))[0][1:]))
+    # Sélectionner aléatoirement les villes à visiter
+    TrajetVilles = sample(list(zip(*Liste_Des_Villes))
+                          [0][1:], len(list(zip(*Liste_Des_Villes))[0][1:]))
+    # Boucle pour visiter les villes sélectionnées
     for j in range(len(TrajetVilles)):
         VilleEtape = TrajetVilles[j]
         LongueurActuelle += Distance_Villes(VilleDepart, VilleEtape)
         TrajetActuel += " -> " + VilleEtape
         VilleDepart = VilleEtape
+    # Ajouter la distance de la dernière ville à Paris
     LongueurActuelle += Distance_Villes(VilleDepart, "Paris")
     TrajetActuel += " -> Paris"
+    # Appeler la fonction pour comparer la distance actuelle avec la distance minimale
     ComparaisonDistance(LongueurActuelle)
+    # Mettre à jour la barre de progression
     bar.update(i)
 
 # Calcul du temps mis pour une moyenne de 110km/h

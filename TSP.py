@@ -2,9 +2,9 @@ import math as math
 import numpy as np
 
 
-def LongVille(NomVille, Liste):
+def LatVille(NomVille, Liste):
     """
-    Fonction permettant d'acquerir la longitude de la ville dans un tableau
+    Fonction permettant d'acquerir la latitude de la ville dans un tableau
 
     Entree : NomVille 'string'
     Output : Longitude 'int'    
@@ -18,9 +18,9 @@ def LongVille(NomVille, Liste):
             return Liste[i][1]  # Renvoie la longitude
 
 
-def LatVille(NomVille, Liste):
+def LongVille(NomVille, Liste):
     """
-    Fonction permettant d'acquerir la latitude de la ville dans un tableau
+    Fonction permettant d'acquerir la longitude de la ville dans un tableau
 
     Entree : NomVille 'string'
     Output : Latitude 'int'    

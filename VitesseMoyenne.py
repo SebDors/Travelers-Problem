@@ -80,6 +80,7 @@ def Distance_Villes(VilleA, VilleB):
 # Initialisation des variables générales
 LongueurMin = float("inf")  # Valeure maximum que peut comporter un integer
 TrajetMin = ""
+TempsTrajetMin = 0
 # Clear le terminal
 os.system('cls')
 # Demander le nombre d'itération à effectuer
@@ -96,9 +97,23 @@ def ComparaisonDistance(x):
     """
     global LongueurMin
     global TrajetMin
+    global TempsTrajetMin
     if LongueurMin > x:
         LongueurMin = x
         TrajetMin = TrajetActuel
+        TempsTrajetMin = TempsTrajetActuel
+
+# Fonction permettant de calculer la vitesse moyenne
+
+
+def VitesseMoyenne(DistanceEntreVilles):
+    if DistanceEntreVilles > 200:
+        vitessemoyenne = 120
+    elif 75 <= DistanceEntreVilles <= 200:
+        vitessemoyenne = 80
+    else:
+        vitessemoyenne = 50
+    return vitessemoyenne
 
 
 # Récuperer le temps du début de la simulation
@@ -110,6 +125,7 @@ bar.start()
 for i in range(NmbIterations):
 
     LongueurActuelle = 0
+    TempsTrajetActuel = 0
     VilleDepart = "Paris"
     TrajetActuel = VilleDepart
     TrajetVilles = sample(
@@ -118,6 +134,8 @@ for i in range(NmbIterations):
         VilleEtape = TrajetVilles[j]
         LongueurActuelle += Distance_Villes(VilleDepart, VilleEtape)
         TrajetActuel += " -> " + VilleEtape
+        TempsTrajetActuel += round(Distance_Villes(VilleDepart, VilleEtape) /
+                                   VitesseMoyenne(Distance_Villes(VilleDepart, VilleEtape)))
         VilleDepart = VilleEtape
     LongueurActuelle += Distance_Villes(VilleDepart, "Paris")
     TrajetActuel += " -> Paris"
@@ -136,3 +154,4 @@ else:
 
 # Donner le resultat trajet et km final
 print(FinalMessage)
+print(f'Le trajet durera : {TempsTrajet}')

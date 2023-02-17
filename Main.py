@@ -54,7 +54,7 @@ def LongVille(NomVille):
     for i in range(len(Liste_Des_Villes)):
         # Si le nom de la ville correspond
         if NomVille == Liste_Des_Villes[i][0]:
-            return Liste_Des_Villes[i][1]  # Renvoie la longitude
+            return Liste_Des_Villes[i][2]  # Renvoie la longitude
 
 
 # Définition de la fonction pour obtenir la latitude d'une ville
@@ -69,7 +69,7 @@ def LatVille(NomVille):
     for i in range(len(Liste_Des_Villes)):
         # Si le nom de la ville correspond
         if NomVille == Liste_Des_Villes[i][0]:
-            return Liste_Des_Villes[i][2]  # Renvoie la latitude
+            return Liste_Des_Villes[i][1]  # Renvoie la latitude
 
 # Définition de la fonction pour calculer la distance entre deux villes
 

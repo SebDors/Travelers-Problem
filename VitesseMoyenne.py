@@ -101,7 +101,7 @@ def ComparaisonDistance(x):
 
 
 def VitesseMoyenne(DistanceEntreVilles):
-    if DistanceEntreVilles > 200:
+    if DistanceEntreVilles > 70:
         return 120
     else:
         return 50

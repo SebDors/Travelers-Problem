@@ -13,54 +13,48 @@ Liste_Des_Villes = [
     ["Toulouse", 43.6047, 1.4442],
     ["Nice", 43.7101, 7.262],
     ["Nantes", 47.2184, -1.5536],
-    ["Strasbourg", 48.5734, 7.7521],
-    ["Montpellier", 43.6107, 3.8767],
-    ["Bordeaux", 44.8379, -0.5795],
-    ["Lille", 50.6329, 3.0583],
-    ["Rennes", 48.1134, -1.6779],
-    ["Grenoble", 45.1885, 5.7245],
-    ["Rouen", 49.4431, 1.0989],
-    ["Saint-Etiennes", 45.4386, 4.3871],
-    ["Dijon", 47.3167, 5.0167],
-    ["Nimes", 43.8345, 4.3600],
-    ["Villeurbannes", 45.7644, 4.8864],
-    ["Angers", 47.4784, -0.5602],
-    ["Saint-Denis", 48.9358, 2.3596],
-    ["Aix-en-Provence", 43.5297, 5.4474],
-    ["Brest", 48.3893, -4.486],
-    ["Limoges", 45.8319, 1.2621],
-    ["Clermont-Ferrand", 45.7833, 3.0833],
-    ["Amiens", 49.8941, 2.295],
-    ["Nancy", 48.6839, 6.1844],
-    ["Roubaix", 50.6942, 3.1746],
-    ["Tourcoing", 50.7236, 3.1524],
-    ["Orléans", 47.9029, 1.9107],
-    ["Mulhouse", 47.7500, 7.3335],
-    ["Caen", 49.1828, -0.3715]]
+    #["Strasbourg", 48.5734, 7.7521],
+    #["Montpellier", 43.6107, 3.8767],
+    #["Bordeaux", 44.8379, -0.5795],
+    #["Lille", 50.6329, 3.0583],
+    #["Rennes", 48.1134, -1.6779],
+    #["Grenoble", 45.1885, 5.7245],
+    #["Rouen", 49.4431, 1.0989],
+    #["Saint-Etiennes", 45.4386, 4.3871],
+    #["Dijon", 47.3167, 5.0167],
+    #["Nimes", 43.8345, 4.3600],
+    #["Villeurbannes", 45.7644, 4.8864],
+    #["Angers", 47.4784, -0.5602],
+    #["Saint-Denis", 48.9358, 2.3596],
+    #["Aix-en-Provence", 43.5297, 5.4474],
+    #["Brest", 48.3893, -4.486],
+    #["Limoges", 45.8319, 1.2621],
+    #["Clermont-Ferrand", 45.7833, 3.0833],
+    #["Amiens", 49.8941, 2.295],
+    #["Nancy", 48.6839, 6.1844],
+    #["Roubaix", 50.6942, 3.1746],
+    #["Tourcoing", 50.7236, 3.1524],
+    #["Orléans", 47.9029, 1.9107],
+    #["Mulhouse", 47.7500, 7.3335],
+    #["Caen", 49.1828, -0.3715]
+]
 
 
 def LongVille(NomVille):
-    """
-    Fonction permettant d'acquerir la longitude de la ville dans le tableau
-
-    Entree : NomVille 'string'
-    Output : Longitude 'int'    
-    """
-    for i in range(len(Liste_Des_Villes[0])):
-        if NomVille == Liste_Des_Villes[0][i]:
-            return Liste_Des_Villes[1][i]
+    # Boucle pour parcourir toutes les villes dans la liste
+    for i in range(len(Liste_Des_Villes)):
+        # Si le nom de la ville correspond
+        if NomVille == Liste_Des_Villes[i][0]:
+            return Liste_Des_Villes[i][2]  # Renvoie la longitude
 
 
+# Définition de la fonction pour obtenir la latitude d'une ville
 def LatVille(NomVille):
-    """
-    Fonction permettant d'acquerir la latitude de la ville dans le tableau
-
-    Entree : NomVille 'string'
-    Output : Latitude 'int'    
-    """
-    for i in range(len(Liste_Des_Villes[0])):
-        if NomVille == Liste_Des_Villes[0][i]:
-            return Liste_Des_Villes[2][i]
+    # Boucle pour parcourir toutes les villes dans la liste
+    for i in range(len(Liste_Des_Villes)):
+        # Si le nom de la ville correspond
+        if NomVille == Liste_Des_Villes[i][0]:
+            return Liste_Des_Villes[i][1]  # Renvoie la latitude
 
 
 def Distance_Villes(VilleA, VilleB):
@@ -80,12 +74,12 @@ def Distance_Villes(VilleA, VilleB):
 # Initialisation des variables générales
 LongueurMin = float("inf")  # Valeure maximum que peut comporter un integer
 TrajetMin = ""
-TempsTrajetMin = 0
+TempsAvecVitesseMin = 0
 # Clear le terminal
 os.system('cls')
 # Demander le nombre d'itération à effectuer
 NmbIterations = int(input(
-    f'Nombre de test ? La probabilitée est de {math.factorial(len(Liste_Des_Villes [0]))} : '))
+    f'Nombre de test ? La probabilitée est de {math.factorial(len(Liste_Des_Villes))} : '))
 
 
 def ComparaisonDistance(x):
@@ -97,23 +91,20 @@ def ComparaisonDistance(x):
     """
     global LongueurMin
     global TrajetMin
-    global TempsTrajetMin
+    global TempsAvecVitesseMin
     if LongueurMin > x:
         LongueurMin = x
         TrajetMin = TrajetActuel
-        TempsTrajetMin = TempsTrajetActuel
+        TempsAvecVitesseMin = TempsAvecVitesseActuel
 
 # Fonction permettant de calculer la vitesse moyenne
 
 
 def VitesseMoyenne(DistanceEntreVilles):
     if DistanceEntreVilles > 200:
-        vitessemoyenne = 120
-    elif 75 <= DistanceEntreVilles <= 200:
-        vitessemoyenne = 80
+        return 120
     else:
-        vitessemoyenne = 50
-    return vitessemoyenne
+        return 50
 
 
 # Récuperer le temps du début de la simulation
@@ -125,17 +116,17 @@ bar.start()
 for i in range(NmbIterations):
 
     LongueurActuelle = 0
-    TempsTrajetActuel = 0
+    TempsAvecVitesseActuel = 0
     VilleDepart = "Paris"
     TrajetActuel = VilleDepart
     TrajetVilles = sample(
-        Liste_Des_Villes[0][1:], len(Liste_Des_Villes[0][1:]))
+        list(zip(*Liste_Des_Villes))[0][1:], len(list(zip(*Liste_Des_Villes))[0][1:]))
     for j in range(len(TrajetVilles)):
         VilleEtape = TrajetVilles[j]
-        LongueurActuelle += Distance_Villes(VilleDepart, VilleEtape)
+        Distance = Distance_Villes(VilleDepart, VilleEtape)
+        LongueurActuelle += Distance
+        TempsAvecVitesseActuel += round(Distance / VitesseMoyenne(Distance))
         TrajetActuel += " -> " + VilleEtape
-        TempsTrajetActuel += round(Distance_Villes(VilleDepart, VilleEtape) /
-                                   VitesseMoyenne(Distance_Villes(VilleDepart, VilleEtape)))
         VilleDepart = VilleEtape
     LongueurActuelle += Distance_Villes(VilleDepart, "Paris")
     TrajetActuel += " -> Paris"
@@ -154,4 +145,4 @@ else:
 
 # Donner le resultat trajet et km final
 print(FinalMessage)
-print(f'Le trajet durera : {TempsTrajet}')
+print(f'Le trajet durera : {TempsAvecVitesseMin}h ')

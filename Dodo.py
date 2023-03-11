@@ -16,29 +16,29 @@ Liste_Des_Villes = [
     ["Nice", 43.7101, 7.262],
     ["Nantes", 47.2184, -1.5536],
     ["Strasbourg", 48.5734, 7.7521],
-    #s["Montpellier", 43.6107, 3.8767],
-    #s["Bordeaux", 44.8379, -0.5795],
-    #s["Lille", 50.6329, 3.0583],
-    #s["Rennes", 48.1134, -1.6779],
-    #s["Grenoble", 45.1885, 5.7245],
-    #s["Rouen", 49.4431, 1.0989],
-    #s["Saint-Etiennes", 45.4386, 4.3871],
-    #s["Dijon", 47.3167, 5.0167],
-    #s["Nimes", 43.8345, 4.3600],
-    #s["Villeurbannes", 45.7644, 4.8864],
-    #s["Angers", 47.4784, -0.5602],
-    #s["Saint-Denis", 48.9358, 2.3596],
-    #s["Aix-en-Provence", 43.5297, 5.4474],
-    #s["Brest", 48.3893, -4.486],
-    #s["Limoges", 45.8319, 1.2621],
-    #s["Clermont-Ferrand", 45.7833, 3.0833],
-    #s["Amiens", 49.8941, 2.295],
-    #s["Nancy", 48.6839, 6.1844],
-    #s["Roubaix", 50.6942, 3.1746],
-    #s["Tourcoing", 50.7236, 3.1524],
-    #s["Orléans", 47.9029, 1.9107],
-    #s["Mulhouse", 47.7500, 7.3335],
-    #s["Caen", 49.1828, -0.3715]
+    ["Montpellier", 43.6107, 3.8767],
+    ["Bordeaux", 44.8379, -0.5795],
+    ["Lille", 50.6329, 3.0583],
+    ["Rennes", 48.1134, -1.6779],
+    ["Grenoble", 45.1885, 5.7245],
+    ["Rouen", 49.4431, 1.0989],
+    ["Saint-Etiennes", 45.4386, 4.3871],
+    ["Dijon", 47.3167, 5.0167],
+    ["Nimes", 43.8345, 4.3600],
+    ["Villeurbannes", 45.7644, 4.8864],
+    ["Angers", 47.4784, -0.5602],
+    ["Saint-Denis", 48.9358, 2.3596],
+    ["Aix-en-Provence", 43.5297, 5.4474],
+    ["Brest", 48.3893, -4.486],
+    ["Limoges", 45.8319, 1.2621],
+    ["Clermont-Ferrand", 45.7833, 3.0833],
+    ["Amiens", 49.8941, 2.295],
+    ["Nancy", 48.6839, 6.1844],
+    ["Roubaix", 50.6942, 3.1746],
+    ["Tourcoing", 50.7236, 3.1524],
+    ["Orléans", 47.9029, 1.9107],
+    ["Mulhouse", 47.7500, 7.3335],
+    ["Caen", 49.1828, -0.3715]
 ]
 
 # Définition de la fonction pour obtenir la longitude d'une ville
@@ -125,7 +125,7 @@ def MiseAJourHeure(Distance):
     if HeureSimulation > 20:
         TempsApresDodo = HeureSimulation - 20
         Jour += 1
-        Heure = 8 + TempsApresDodo
+        Heure = 8 + TempsApresDodo + 2
     else:
         Heure = HeureSimulation + 2
 

@@ -1,0 +1,7 @@
+Nombre de test ? La probabilitée est de 8_841_761_993_739_701_954_543_616_000_000 : 30_000_000
+Le trajet minimum est : Paris -> Amiens -> Saint-Etiennes -> Nice -> Toulouse -> Grenoble -> Nimes -> Dijon -> 
+Villeurbannes -> Montpellier -> Bordeaux -> Clermont-Ferrand -> Aix-en-Provence -> Marseille -> Mulhouse -> 
+Saint-Denis -> Rouen -> Caen -> Nantes -> Brest -> Angers -> Rennes -> Limoges -> Lyon -> Strasbourg -> Nancy -> 
+Lille -> Roubaix -> Tourcoing -> Orléans -> Paris avec 7718 km
+La durée du voyage est de 70 heures.
+Cela a pris 117.91666666666667 minutes

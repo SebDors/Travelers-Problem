@@ -2,7 +2,7 @@
 import numpy as np
 import math as math
 from datetime import datetime
-from random import sample
+from random import shuffle
 from progressbar import ProgressBar, Percentage, Timer, Bar, ETA
 import os
 
@@ -40,9 +40,11 @@ Liste_Des_Villes = [
     ["Mulhouse", 47.7500, 7.3335],
     ["Caen", 49.1828, -0.3715]]
 
+# Selectionner uniquement la première colonne
+TrajetVilles = [row[0] for row in Liste_Des_Villes]
+
+
 # Définition de la fonction pour obtenir la longitude d'une ville
-
-
 def LongVille(NomVille):
     """
     Fonction permettant d'acquerir la longitude de la ville dans le tableau
@@ -125,9 +127,8 @@ for i in range(NmbIterations):
     # Initialisation de la ville de départ
     VilleDepart = "Paris"
     TrajetActuel = VilleDepart
-    # Sélectionner aléatoirement les villes à visiter
-    TrajetVilles = sample(list(zip(*Liste_Des_Villes))
-                          [0][1:], len(list(zip(*Liste_Des_Villes))[0][1:]))
+    # Sélectionner aléatoirement les villes à visiter parmi la première colonne deu tableau des villes
+    shuffle(TrajetVilles)
     # Boucle pour visiter les villes sélectionnées
     for j in range(len(TrajetVilles)):
         VilleEtape = TrajetVilles[j]
@@ -151,9 +152,11 @@ DeltaTime = EndTime - StartTime
 # Convertir en minute si necessaire
 if DeltaTime.total_seconds() > 60:
     DeltaTimeMin = DeltaTime.total_seconds()/60
-    FinalMessage = f'Le trajet minimum est : {TrajetMin} avec {round(LongueurMin)} km       \nLa durée du voyage est de {TempsTrajet} heures.\r\nCela a pris {DeltaTimeMin} minutes'
+    FinalMessage = f'Le trajet minimum est :  avec {round(LongueurMin)} km       \nLa durée du voyage est de {TempsTrajet} heures.\r\nCela a pris {DeltaTimeMin} minutes'
 else:
-    FinalMessage = f'Le trajet minimum est : {TrajetMin} avec {round(LongueurMin)} km       \nLa durée du voyage est de {TempsTrajet} heures.\r\nCela a pris {DeltaTime.total_seconds()} secondes'
+    FinalMessage = f'Le trajet minimum est :  avec {round(LongueurMin)} km       \nLa durée du voyage est de {TempsTrajet} heures.\r\nCela a pris {DeltaTime.total_seconds()} secondes'
 
 # Donner le resultat trajet et km final
-print(FinalMessage)
+os.system('cls')
+print(
+    f'{NmbIterations} itérations avec {round(LongueurMin)} km       \nLa durée du voyage est de {TempsTrajet} heures.\r\nCela a pris {DeltaTime.total_seconds()} secondes')

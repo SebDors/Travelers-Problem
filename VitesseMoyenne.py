@@ -104,7 +104,7 @@ def VitesseMoyenne(DistanceEntreVilles):
     if DistanceEntreVilles > 70:
         return 120
     else:
-        return 50
+        return 80
 
 
 # Récuperer le temps du début de la simulation
